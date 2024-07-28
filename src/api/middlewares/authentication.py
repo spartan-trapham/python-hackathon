@@ -1,13 +1,15 @@
-from typing import Annotated
-
-from fastapi import Header, HTTPException
-
-
-async def get_token_header(x_token: Annotated[str, Header()]):
-    if x_token != "fake-super-secret-token":
-        raise HTTPException(status_code=400, detail="X-Token header invalid")
+from starlette.types import ASGIApp, Scope, Receive, Send
+from starlette.authentication import AuthCredentials
 
 
-async def get_query_token(token: str):
-    if token != "jessica":
-        raise HTTPException(status_code=400, detail="No Jessica token provided")
+class AuthenticationMiddleware:
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        auth_scopes = []
+        user = {'is_authenticated': False}
+
+        scope['auth'] = AuthCredentials(auth_scopes)
+        scope['user'] = user
+        await self.app(scope, receive, send)

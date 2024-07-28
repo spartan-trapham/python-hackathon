@@ -1,3 +1,42 @@
+# Template API
+
+## Requirements
+
+- Python v3.12
+
+## Setup
+
+Step 1: Create venv
+
+```
+python -m venv .venv
+```
+
+Step 2: Activate venv
+
+```
+source .venv/bin/activate
+```
+
+Step 3: Install poetry
+
+```
+pip install --upgrade pip
+pip install poetry
+```
+
+Step 4: Run poetry install
+
+```
+poetry install
+```
+
+## Development
+
+```
+ fastapi dev app/main.py 
+```
+
 ## Project structure
 
 ```

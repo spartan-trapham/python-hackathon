@@ -1,1 +1,4 @@
-py-docs/*
+.DS_Store
+.idea
+.venv
+__pycache__

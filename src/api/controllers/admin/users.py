@@ -1,24 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException
-from middlewares.authentication import get_token_header
+import uuid
 
-router = APIRouter(
-    prefix="/users",
-    tags=["users"],
-    dependencies=[Depends(get_token_header)],
-    responses={404: {"description": "Not found"}},
-)
+from fastapi import APIRouter
+from starlette.requests import Request
 
+from src.api.controllers.admin.responses.users import to_user
+from src.core import logging
+from src.utils.response import response_item
 
-@router.get("/users/", tags=["users"])
-async def read_users():
-    return [{"username": "Rick"}, {"username": "Morty"}]
+router = APIRouter(prefix="/users")
+logger = logging.setup_logger(__name__)
 
 
-@router.get("/users/me", tags=["users"])
-async def read_user_me():
-    return {"username": "fakecurrentuser"}
+@router.get('/me')
+async def me(request: Request):
+    logger.info("Get current user information")
 
-
-@router.get("/users/{username}", tags=["users"])
-async def read_user(username: str):
-    return {"username": username}
+    return response_item(to_user({"id": uuid.uuid4(), "email": "example@example.com"}))
