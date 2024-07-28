@@ -1,50 +1,67 @@
-{
-    "CUS-0403": {
-        "error_id": "CUS-0403",
-        "code": "UNAUTHORIZED_ACCESS",
-    },
-    "CUS-0405": {
-        "error_id": "CUS-0405",
-        "code": "UNAUTHORIZED_ACCESS",
-    },
-    "CUS-0500": {
-        "error_id": "CUS-0500",
-        "code": "INTERNAL_SERVER_ERROR",
-    },
-    "CUS-0504": {
-        "error_id": "CUS-0504",
-        "code": "TIMEOUT",
-    },
-    "CUS-0602": {
-        "error_id": "CUS-0602",
-        "code": "OBJECT_NOT_FOUND",
-    },
-    "CUS-0603": {
-        "error_id": "CUS-0603",
-        "code": "INVALID_PARAMETER",
-    },
-    "CUS-0604": {
-        "error_id": "CUS-0604",
-        "code": "ACTION_NOT_ALLOWED",
-    },
-    "CUS-0605": {
-        "error_id": "CUS-0605",
-        "code": "BAD_REQUEST",
-    },
-    "CUS-0607": {
-        "error_id": "CUS-0607",
-        "code": "METHOD_NOT_ALLOWED",
-    },
-    "CUS-0608": {
-        "error_id": "CUS-0608",
-        "code": "NOT_FOUND",
-    },
-    "CUS-0900": {
-        "error_id": "CUS-0900",
-        "code": "INTERNAL_SERVER_ERROR",
-    },
-    "CUS-0901": {
-        "error_id": "CUS-0901",
-        "code": "UNDER_MAINTENANCE",
-    }
+from starlette.status import (
+    HTTP_500_INTERNAL_SERVER_ERROR, HTTP_401_UNAUTHORIZED, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND,
+)
+
+# System common error
+BAD_REQUEST_ERROR = {
+    'code': 'SYS-0400',
+    'http_status': HTTP_400_BAD_REQUEST,
+    'message': 'A bad request was made.'
+}
+
+UNAUTHENTICATED_ERROR = {
+    'code': 'SYS-0401',
+    'http_status': HTTP_401_UNAUTHORIZED,
+    'message': 'User authentication is not done. You need to log in again.'
+}
+
+FORBIDDEN_ERROR = {
+    'code': 'SYS-0403',
+    'http_status': HTTP_403_FORBIDDEN,
+    'message': 'Access is forbidden. You do not have the necessary permissions.'
+}
+
+NOT_FOUND_ERROR = {
+    'code': 'SYS-0404',
+    'http_status': HTTP_404_NOT_FOUND,
+    'message': 'The requested resource was not found.'
+}
+
+INTERNAL_SERVER_ERROR = {
+    'code': 'SYS-0500',
+    'http_status': HTTP_500_INTERNAL_SERVER_ERROR,
+    'message': 'An internal server error has occurred. Please contact support if the problem persists.'
+}
+
+UNKNOWN_ERROR = {
+    'code': 'SYS-0900',
+    'http_status': HTTP_500_INTERNAL_SERVER_ERROR,
+    'message': 'An unknown error has occurred. Please contact support if the problem persists.'
+}
+
+# App error
+# User errors
+USER_NOT_FOUND = {
+    'code': 'APP-0201',
+    'http_status': HTTP_404_NOT_FOUND,
+    'message': 'User not found.'
+}
+
+USER_ALREADY_EXISTS = {
+    'code': 'APP-0202',
+    'http_status': HTTP_400_BAD_REQUEST,
+    'message': 'User already exists.'
+}
+
+# Company errors
+COMPANY_NOT_FOUND = {
+    'code': 'APP-0301',
+    'http_status': HTTP_404_NOT_FOUND,
+    'message': 'Company not found.'
+}
+
+COMPANY_ALREADY_EXISTS = {
+    'code': 'APP-0302',
+    'http_status': HTTP_400_BAD_REQUEST,
+    'message': 'Company already exists.'
 }

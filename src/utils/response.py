@@ -1,6 +1,6 @@
 from starlette.responses import JSONResponse
 
-from src.exceptions.app_exception import AppException
+from src.exceptions.app_exceptions import AppException
 
 
 def response_item(item) -> dict:
@@ -9,13 +9,14 @@ def response_item(item) -> dict:
     }
 
 
-def response_pagination(items: list, limit: int, next_page_token: str = None) -> dict:
+def response_pagination(items: list, total_records: int, current_page: int, total_pages: int, ) -> dict:
     return {
         'data': {
             'items': items,
             'pagination': {
-                'limit': limit,
-                'next_page_token': next_page_token,
+                'total_records': total_records,
+                'current_page': current_page,
+                'total_pages': total_pages,
             },
         },
     }
