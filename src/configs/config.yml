@@ -8,16 +8,11 @@ app:
   workers: ${WORKERS:0}
 
 databases:
-  url: ${DB_URL:localhost}
-  replicaEnabled: ${DB_REPLICA_ENABLED:false}
-  replicaUrl: ${DB_REPLICA_URL:localhost}
   name: ${DB_NAME:local}
   username: ${DB_USERNAME:local}
   password: ${DB_PASSWORD:local}
-  prepareThreshold: 0
-  replicaTimeoutSeconds: 10
-  primaryTimeoutSeconds: 5
-  portNumber: ${DB_PORT:5432}
+  host: ${DB_HOST:localhost}
+  port: ${DB_PORT:5432}
 
 aws:
   accessKeyId: ${AWS_KEY_ID:'temp'}

@@ -18,15 +18,11 @@ class AppConfig(BaseModel):
 
 class DatabaseConfig(BaseModel):
     url: str
-    replica_enabled: bool = Field(..., alias="replicaEnabled")
-    replica_url: str = Field(..., alias="replicaUrl")
     name: str
     username: str
     password: str
-    prepare_threshold: int = Field(..., alias="prepareThreshold")
-    replica_timeout_seconds: int = Field(..., alias="replicaTimeoutSeconds")
-    primary_timeout_seconds: int = Field(..., alias="primaryTimeoutSeconds")
-    port_number: int = Field(..., alias="portNumber")
+    host: str
+    port: int
 
 
 class AWSConfig:
