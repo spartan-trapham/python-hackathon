@@ -8,7 +8,7 @@ from starlette.requests import Request
 from src.api import routers
 from src.api.middlewares.authentication import AuthenticationMiddleware
 from src.api.middlewares.exception_handler import ExceptionHandlerMiddleware
-from src.configs import config
+from src.containers.container import Container
 from src.utils.request import generate_request_id
 
 
@@ -37,12 +37,17 @@ def init_middlewares(app_: FastAPI) -> None:
 
 
 def create_app() -> FastAPI:
+    container = Container()
+    app_config = container.configuration().app
+
     app_ = FastAPI(
         host='127.0.0.1',
-        title=config.app.title,
-        description=config.app.description,
-        root_path=config.app.root_path,
+        title=app_config.title,
+        description=app_config.description,
+        root_path=app_config.root_path,
     )
+
+    app_.container = container
     init_exception_handlers(app_)
     init_middlewares(app_)
     init_routers(app_)

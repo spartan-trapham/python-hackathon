@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Python v3.12
+- Python v3.11
 
 ## Setup
 

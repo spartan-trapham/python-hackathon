@@ -1,10 +1,12 @@
+import uuid
+
 from .base import BaseRepository
 from .errors import NotFoundError
 from ..models import User
 
 
 class UserRepository(BaseRepository):
-    def get_by_id(self, user_id: str):
+    def by_id(self, user_id: uuid.UUID):
         with self.session() as session:
             user = session.query(User).filter(User.id == user_id).first()
             if not user:

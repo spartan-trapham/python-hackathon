@@ -1,7 +1,7 @@
 from sqlalchemy import Column, VARCHAR
 
 from ._common import IDMixin, DateTimeMixin
-from ...databases.db import Base
+from src.database.db import Base
 
 
 class User(Base, IDMixin, DateTimeMixin):
@@ -9,3 +9,4 @@ class User(Base, IDMixin, DateTimeMixin):
 
     name = Column(VARCHAR(255), nullable=False)
     email = Column(VARCHAR(255), nullable=False)
+    password = Column(VARCHAR(255), nullable=False)

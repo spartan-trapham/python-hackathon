@@ -7,8 +7,8 @@ app:
   root_path: ${ROOT_PATH:``}
   workers: ${WORKERS:0}
 
-databases:
-  name: ${DB_NAME:local}
+database:
+  name: ${DB_NAME:postgres}
   username: ${DB_USERNAME:local}
   password: ${DB_PASSWORD:local}
   host: ${DB_HOST:localhost}

@@ -17,7 +17,6 @@ class AppConfig(BaseModel):
 
 
 class DatabaseConfig(BaseModel):
-    url: str
     name: str
     username: str
     password: str
@@ -53,7 +52,7 @@ class RedisConfig:
 
 class Config(BaseModel):
     app: AppConfig
-    databases: DatabaseConfig
+    database: DatabaseConfig
     # aws: AWSConfig
     # sqs: SQSConfig
     # s3: S3Config
@@ -96,7 +95,7 @@ class Configuration:
     def create_dataclass(self, config):
         config_obj = Config(
             app=AppConfig(**config['app']),
-            databases=DatabaseConfig(**config['databases']),
+            database=DatabaseConfig(**config['database']),
             # aws=AWSConfig(**config['aws']),
             # sqs=SQSConfig(**config['sqs']),
             # s3=S3Config(**config['s3']),

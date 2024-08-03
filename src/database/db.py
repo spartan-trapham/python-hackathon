@@ -5,8 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, scoped_session
 
-from ..configs.config import DatabaseConfig
-from ..core import logging
+from src.configs.config import DatabaseConfig
+from src.core import logging
 
 Base = declarative_base()
 logger = logging.setup_logger(__name__)
