@@ -1,6 +1,6 @@
 from starlette.responses import JSONResponse
 from pydantic import BaseModel
-from src.exceptions.app_exceptions import AppException
+from src.core.app_exceptions import AppException
 
 
 def response_item(item: BaseModel) -> dict:

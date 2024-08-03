@@ -1,8 +1,4 @@
-from src.core import logging
-from src.exceptions.error_codes import UNKNOWN_ERROR, BAD_REQUEST_ERROR, UNAUTHENTICATED_ERROR, FORBIDDEN_ERROR, \
-    NOT_FOUND_ERROR, INTERNAL_SERVER_ERROR
-
-logger = logging.setup_logger(__name__)
+from src.errors.error_codes import UNKNOWN_ERROR
 
 
 class AppException(Exception):
@@ -28,38 +24,9 @@ class AppException(Exception):
 
         return dict_data
 
-    @classmethod
-    def bad_request(cls):
-        return cls(BAD_REQUEST_ERROR)
-
-    @classmethod
-    def unauthorized(cls):
-        return cls(UNAUTHENTICATED_ERROR)
-
-    @classmethod
-    def forbidden(cls):
-        return cls(FORBIDDEN_ERROR)
-
-    @classmethod
-    def not_found(cls):
-        return cls(NOT_FOUND_ERROR)
-
-    @classmethod
-    def server_error(cls):
-        return cls(INTERNAL_SERVER_ERROR)
-
-    @classmethod
-    def unknown_error(cls):
-        return cls(UNKNOWN_ERROR)
-
 
 class AppFieldException(AppException):
     def __init__(self, type: str, field: str, message: str):
         super().__init__(type=type, field=field)
         self.error.pop('code')
         self.error['message'] = message
-
-
-class AppValidationException(AppException):
-    def __init__(self, errors: [AppFieldException]):
-        super().__init__(BAD_REQUEST_ERROR, errors=errors)

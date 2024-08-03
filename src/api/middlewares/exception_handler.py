@@ -3,7 +3,9 @@ from starlette.exceptions import HTTPException
 from starlette.types import ASGIApp, Scope, Receive, Send
 
 from src.core import logging
-from src.exceptions.app_exceptions import AppFieldException, AppValidationException, AppException
+from src.core.app_exceptions import AppFieldException, AppException
+from src.errors.error_codes import UNKNOWN_ERROR, BAD_REQUEST_ERROR, UNAUTHENTICATED_ERROR, FORBIDDEN_ERROR, \
+    NOT_FOUND_ERROR
 from src.utils.response import response_error
 
 logger = logging.setup_logger(__name__)
@@ -29,21 +31,21 @@ class ExceptionHandlerMiddleware:
                     message = error.get('msg')
                     field = '.'.join(error.get('loc', []))
                     errors.append(AppFieldException(type=error_type, field=field, message=message))
-                new_exception = AppValidationException(errors=errors)
+                new_exception = AppException(BAD_REQUEST_ERROR, errors=errors)
             elif isinstance(exception, HTTPException):
                 if exception.status_code == 400:
-                    new_exception = AppException.bad_request()
+                    new_exception = AppException(BAD_REQUEST_ERROR)
                 elif exception.status_code == 401:
-                    new_exception = AppException.unauthorized()
+                    new_exception = AppException(UNAUTHENTICATED_ERROR)
                 elif exception.status_code == 403:
-                    new_exception = AppException.forbidden()
+                    new_exception = AppException(FORBIDDEN_ERROR)
                 elif exception.status_code == 404:
-                    new_exception = AppException.not_found()
+                    new_exception = AppException(NOT_FOUND_ERROR)
                 else:
-                    new_exception = AppException.unknown_error()
+                    new_exception = AppException(UNKNOWN_ERROR)
             elif isinstance(exception, AppException):
                 new_exception = exception
             else:
-                new_exception = AppException.unknown_error()
+                new_exception = AppException(UNKNOWN_ERROR)
 
             await response_error(new_exception)(scope, receive, send)

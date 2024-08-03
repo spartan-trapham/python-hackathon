@@ -9,8 +9,8 @@ from starlette.requests import Request
 
 from src.containers.container import Container
 from src.core import logging
-from src.exceptions.app_exceptions import AppException
-from src.exceptions.error_codes import USER_NOT_FOUND
+from src.core.app_exceptions import AppException
+from src.errors.error_codes import USER_NOT_FOUND
 from src.schemas.users import UserResponse
 from src.services.user import UserService
 
