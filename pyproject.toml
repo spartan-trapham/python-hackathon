@@ -24,6 +24,7 @@ psycopg2 = "2.9.9"
 pylint = "2.5.3"
 coloredlogs = "14.0.0"
 colorlog = "4.2.1"
+pytest = "^7.4.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

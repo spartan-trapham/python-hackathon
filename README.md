@@ -34,7 +34,7 @@ poetry install
 ## Development
 
 ```
- fastapi dev src/main.py 
+fastapi dev src/main.py 
 ```
 
 If everything is set up correctly, you will get this
