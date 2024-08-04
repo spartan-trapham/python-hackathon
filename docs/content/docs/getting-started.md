@@ -6,10 +6,11 @@ author = "Pham Xuan Tra"
 title = "Getting started"
 icon = "rocket_launch"
 toc = true
-description = "A quickstart guide to create new python project"
+description = "A quickstart guide to run python template"
 publishdate = "2023-05-03T22:37:22+01:00"
 tags = ["Beginners"]
 +++
+
 ## Requirements
 
 - Python v3.12

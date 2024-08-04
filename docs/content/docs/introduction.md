@@ -1,16 +1,25 @@
 +++
-weight = 100
+weight = 101
 date = "2023-05-03T22:37:22+01:00"
 draft = true
 author = "Pham Xuan Tra"
 title = "Introduction"
 icon = "rocket_launch"
 toc = true
-description = "A quickstart guide to create new python project"
+description = "Brief introduction about python project structure"
 publishdate = "2023-05-03T22:37:22+01:00"
 tags = ["Beginners"]
 +++
 ## Project structure
+
+The project's aim is building a generic API web-server with some common features:
+- API routing
+- Testing
+- Database connection
+- Workers
+- 3rd party libraries
+
+All these features following Depenency Injection pattern.
 
 ```bash
 src
@@ -41,6 +50,7 @@ src
 └── worker
     └── processors
 ```
+
 
 - `API` includes components building routers for HTTP server: `controllers` (aka handlers), `middlewares`, `validators`
   - `controllers` (aka handlers) is designed following role-based architect so that each group of endpoints will have the best security management.
