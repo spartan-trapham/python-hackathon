@@ -34,6 +34,7 @@ poetry install
 ## Development
 
 ```
+export PYTHONPATH="$PWD"
 python src/main.py 
 ```
 
