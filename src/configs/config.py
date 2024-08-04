@@ -44,12 +44,12 @@ class S3Config(BaseModel):
 
 
 class RedisConfig(BaseModel):
-    hosts: str
-    user: str
-    password: str
-    ssl: bool
-    timeout: int
-    port: int
+    hosts: str = Field(default="localhost")
+    user: str = Field(default="")
+    password: str = Field(default="")
+    ssl: bool = Field(default=False)
+    timeout: int = Field(default=5)
+    port: int = Field(default=6379)
 
 
 # Celery configuration
