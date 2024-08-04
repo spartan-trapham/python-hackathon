@@ -1,7 +1,9 @@
+import uuid
 from celery import Celery
 
 from src.worker.tasks.notification import NotificationTask
 from src.worker.tasks.s3 import S3Task
+from src.worker.tasks.user import UserTask
 
 # get configuration here
 
@@ -14,3 +16,7 @@ def notificationtask_fire_notification(self):
 @scheduler.task(base=S3Task, bind=True)
 def s3task_clean_up(self):
     return self.clean_up()
+
+@scheduler.task(base=UserTask, bind=True)
+def usertask_send_email(self, user_id: list[uuid.UUID]):
+    return self.send_email(user_id)
