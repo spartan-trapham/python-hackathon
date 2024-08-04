@@ -36,6 +36,15 @@ redis:
   port: ${REDIS_PORT:6379}
 
 celery:
+  critical:
+    broker_url: ${CELERY_BROKER_URL:redis://localhost:6379/0}
+    result_backend: ${CELERY_RESULT_BACKEND:redis://localhost:6379/0}
+  scheduler:
+    broker_url: ${CELERY_BROKER_URL:redis://localhost:6379/0}
+    result_backend: ${CELERY_RESULT_BACKEND:redis://localhost:6379/0}
+  internal:
+    broker_url: ${CELERY_BROKER_URL}
+    result_backend: ${CELERY_RESULT_BACKEND:redis://localhost:6379/0}
   result_expires: 0
   max_retry: 3
   schedulers:

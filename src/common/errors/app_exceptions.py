@@ -1,4 +1,4 @@
-from src.errors.error_codes import UNKNOWN_ERROR
+from src.common.errors.error_codes import UNKNOWN_ERROR
 
 
 class AppException(Exception):

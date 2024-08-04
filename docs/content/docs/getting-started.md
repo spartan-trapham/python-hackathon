@@ -45,50 +45,27 @@ poetry install
 ## Development
 
 ```
- fastapi dev src/main.py 
+export PYTHONPATH="$PWD"
+python src/main.py 
 ```
 
 If everything is set up correctly, you will get this
 ```
-INFO     Using path src/main.py                                                                                                                                                                                     
-INFO     Resolved absolute path /Users/${USER_NAME}/${PATH}/python-hackathon/src/main.py                                                                                                                       
-INFO     Searching for package file structure from directories with __init__.py files                                                                                                                               
-INFO     Importing from /Users/${USER_NAME}/${PATH}/python-hackathon                                                                                                                                           
-                                                                                                                                                                                                                    
- ╭─ Python package file structure ─╮                                                                                                                                                                                
- │                                 │                                                                                                                                                                                
- │  📁 src                         │                                                                                                                                                                                
- │  ├── 🐍 __init__.py             │                                                                                                                                                                                
- │  └── 🐍 main.py                 │                                                                                                                                                                                
- │                                 │                                                                                                                                                                                
- ╰─────────────────────────────────╯                                                                                                                                                                                
-                                                                                                                                                                                                                    
-INFO     Importing module src.main                                                                                                                                                                                  
-INFO     Found importable FastAPI app                                                                                                                                                                               
-                                                                                                                                                                                                                    
- ╭── Importable FastAPI app ──╮                                                                                                                                                                                     
- │                            │                                                                                                                                                                                     
- │  from src.main import app  │                                                                                                                                                                                     
- │                            │                                                                                                                                                                                     
- ╰────────────────────────────╯                                                                                                                                                                                     
-                                                                                                                                                                                                                    
-INFO     Using import string src.main:app                                                                                                                                                                           
-                                                                                                                                                                                                                    
- ╭────────── FastAPI CLI - Development mode ───────────╮                                                                                                                                                            
- │                                                     │                                                                                                                                                            
- │  Serving at: http://127.0.0.1:8000                  │                                                                                                                                                            
- │                                                     │                                                                                                                                                            
- │  API docs: http://127.0.0.1:8000/docs               │                                                                                                                                                            
- │                                                     │                                                                                                                                                            
- │  Running in development mode, for production use:   │                                                                                                                                                            
- │                                                     │                                                                                                                                                            
- │  fastapi run                                        │                                                                                                                                                            
- │                                                     │                                                                                                                                                            
- ╰─────────────────────────────────────────────────────╯      
+INFO:     Will watch for changes in these directories: ['/Users/sontc/Documents/Data/Project/C0X/python/python-hackathon']
+INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [99878] using WatchFiles
+INFO:     Started server process [99884]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.    
 ```
 
 You can call `/api/health`, the message "Hello world" will be printed under object schema.
 
 ```
 {"Hello":"World"}
+```
+
+## Start Celery worker
+```shell
+celery -A src.celery_app.app worker
 ```

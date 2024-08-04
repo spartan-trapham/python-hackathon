@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, MetaData, Connection
 from sqlalchemy.orm import sessionmaker, Session, scoped_session, DeclarativeBase
 
 from src.configs.config import DatabaseConfig
-from src.core import logging
+from src.libs.log import logging
 
 logger = logging.setup_logger(__name__)
 

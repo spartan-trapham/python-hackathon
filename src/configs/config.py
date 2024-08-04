@@ -84,12 +84,17 @@ class SchedulerConfigs(BaseModel):
     crontab: CrontabSchedulerConfigs = Field(default=None)
     interval: IntervalSchedulerConfigs = Field(default=None)
 
+class QueueConfig(BaseModel):
+    broker_url: str = Field(default="")
+    backend_url: str = Field(default="")
 
 class CeleryConfig(BaseModel):
     result_expires: int = Field(default=0)
     max_retry: int = Field(default=3)
-    schedulers: SchedulerConfigs = Field()
-
+    # schedulers: SchedulerConfigs = Field()
+    critical: QueueConfig = Field()
+    scheduler: QueueConfig = Field()
+    internal: QueueConfig = Field()
 
 class Config(BaseModel):
     app: AppConfig

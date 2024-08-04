@@ -6,7 +6,7 @@ from dependency_injector.wiring import (
 from fastapi import APIRouter
 from starlette.requests import Request
 
-from src.core import logging
+from src.libs.log import logging
 from src.worker.brokers.scheduler import usertask_send_email
 
 router = APIRouter(prefix="/tasks")

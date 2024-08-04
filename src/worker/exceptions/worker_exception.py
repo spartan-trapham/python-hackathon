@@ -1,4 +1,4 @@
-from ...core.app_exceptions import AppException
+from ...common.errors.app_exceptions import AppException
 
 
 class WorkerException(AppException):

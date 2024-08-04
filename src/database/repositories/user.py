@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from src.database.models.user_roles import UserRole
 
 from ..models import User
-from ...core.app_exceptions import AppException
-from ...errors.error_codes import USER_NOT_FOUND
+from ...common.errors.app_exceptions import AppException
+from ...common.errors.error_codes import USER_NOT_FOUND
 
 
 class UserRepository:

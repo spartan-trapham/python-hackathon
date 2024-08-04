@@ -8,9 +8,9 @@ from fastapi import APIRouter, Depends
 from starlette.requests import Request
 
 from src.containers.container import Container
-from src.core import logging
-from src.core.app_exceptions import AppException
-from src.errors.error_codes import USER_NOT_FOUND
+from src.libs.log import logging
+from src.common.errors.app_exceptions import AppException
+from src.common.errors.error_codes import USER_NOT_FOUND
 from src.schemas.users import UserResponse
 from src.services.user import UserService
 

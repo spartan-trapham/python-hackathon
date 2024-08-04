@@ -1,11 +1,13 @@
 import uuid
 from celery import Celery
 
+from src.containers.container import Container
 from src.worker.tasks.notification import NotificationTask
 from src.worker.tasks.s3 import S3Task
 from src.worker.tasks.user import UserTask
 
 # get configuration here
+config = Container().configuration().celery
 
 scheduler = Celery("scheduler", broker=config.scheduler.broker_url, backend=config.scheduler.backend_url)
 

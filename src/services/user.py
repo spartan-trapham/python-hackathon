@@ -1,9 +1,9 @@
 import uuid
 
-from src.core.logging import setup_logger
+from src.libs.log.logging import setup_logger
 from src.database.models import User
 from src.database.repositories.user import UserRepository
-from src.libs.db.engine import DB
+from src.database.db import Database
 from src.schemas.users import UserCreateRequest
 from src.worker.brokers.critical import usertask_remove_user
 

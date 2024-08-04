@@ -3,82 +3,35 @@
 ## Requirements
 
 - Python v3.11
+- Poetry, FastAPI, SQLAlchemy, Celery
+- PostgreSQL, Redis
 
-## Setup
+## Getting started
 
-Step 1: Create venv
-
-```
-python -m venv .venv
-```
-
-Step 2: Activate venv
-
-```
-source .venv/bin/activate
-```
-
-Step 3: Install poetry
-
-```
-pip install --upgrade pip
-pip install poetry
-```
-
-Step 4: Run poetry install
-
-```
-poetry install
-```
-
-## Development
-
-```
-export PYTHONPATH="$PWD"
-python src/main.py 
-```
-
-If everything is set up correctly, you will get this
-```
-INFO:     Will watch for changes in these directories: ['/Users/sontc/Documents/Data/Project/C0X/python/python-hackathon']
-INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
-INFO:     Started reloader process [99878] using WatchFiles
-INFO:     Started server process [99884]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.    
-```
-
-You can call `/api/health`, the message "Hello world" will be printed under object schema.
-
-```
-{"Hello":"World"}
-```
-
-## Start Celery worker
-```shell
-celery -A src.celery_app.app worker
-```
+Please check the [document](docs/content/docs/getting-started.md) to run the project with poetry and celery.
 
 ## Project structure
+
+The project contains some main features to build up a generic api-server:
+
+- [APIs](#api-gateway)
+- [services](#services)
+- [libraries](#libraries)
+- [databases](#database)
+- [workers](#workers)
+
+and [some other utilities](#common-utilities-and-helpers).
 
 ```
 src
 ├── api
 │   ├── controllers
 │   │   ├── admin
-│   │   │   └── dtos
 │   │   ├── client
-│   │   │   └── dtos
 │   │   └── superadmin
-│   │       └── dtos
 │   ├── middlewares
 │   └── validators
-├── common
-├── entities
-├── helpers
 ├── libs
-│   ├── config
-│   ├── db
 │   ├── log
 │   ├── redis
 │   ├── s3
@@ -86,17 +39,46 @@ src
 ├── services
 │   ├── roles
 │   └── users
+├── worker
+│   ├── brokers
+│   └── tasks
+├── database
+│   ├── migrations
+│   ├── models
+│   └── repositories
 ├── utils
-└── worker
-    └── processors
+├── common
+├── entities
+├── helpers
 ```
+### API gateway
+`API` includes components building routers for HTTP server: `controllers` (aka handlers), `middlewares`, `validators`
 
-- `API` includes components building routers for HTTP server: `controllers` (aka handlers), `middlewares`, `validators`
-  - `controllers` (aka handlers) is designed following role-based architect so that each group of endpoints will have the best security management.
-- `worker` includes components building worker management for background tasks. The architecture of this directory is similar to `api` where it is connect to a message queue service to listen incomming message (request in http server). Each incomming message will be dispatched to workers via queue as a http server dispatches requests to controllers/handlers via routers.
-- `common` includes common functions which can be used in various places. The function can import any packages. Please take care this directory. If it grows bigger than normal, the project is going to be a _ball of mud_
-- `entities` contains description of database tables and common queries/mutations for that table. Don't try to import any other entities unless they are relations. We will do complex query in repositories of particular services.
+#### Controllers / handlers
+`controllers` (aka handlers) is designed following role-based architect in order to group endpoints following user types. It will reduce the cost greatly for long-term maintenance and development. Almost user and system requirements are separated between users/clients. Developers and QA can break down, develop, testing and deploy tasks easily without interference between users.
+
+### Services
+`services` the core logics to serve the business live here. Please build the services directory with specific architectures with clear descriptions so that developers can manage all logic, testing and documentations correctly following bussiness requirements changed.
+
+DI pattern helps this part to be well-tested and easily for refactoring other parts to achieve better quality.
+
+### Database
+`models` contains description of database tables and common queries/mutations for that table. Don't try to import any other entities unless they are relations. We will do complex query in repositories for particular services.
+
+`migrations` is a collection of `SQL` scripts to form up the database structures and some initial data. This directory is followed [user guide of flyway](https://www.red-gate.com/hub/university/courses/flyway/getting-started-with-flyway/introduction-to-flyway/folder-structure-and-configuration-file)
+
+### Workers
+`workers` implement [Celery frameworks](https://docs.celeryq.dev/en/stable/index.html) to manage and distributed task queue. The structure would somehow similar with [API gateway](#api-gateway). `workers` contains 2 main parts: **brokers** and **tasks**
+
+#### Brokers
+`brokers` act as a dispatcher to get the message from the queue then deliver the message to the workers to run the tasks. Their roles are similar with API which routes requests to the controllers or handlers.
+#### Tasks
+`Tasks` is list of methods that workers can execute matched with message from the queue. In API, this part is similar with service that controllers will called to serve the requests.
+
+### Libraries
+`libs` contains configurations to use 3rd party libraries in the project. For example, `s3` has its own library but instead of using directly in the project, `libs/s3` will cover common functionalities like `init,deinit,upload,download` to form up the methods which are compatible with the project requriements
+
+### Common utilities and helpers
+- `common` includes common features like context extractor, error handler, error code.
 - `helpers` contains some common functions for specific places. For example: transforming data structure between layers, building response message of a http request, wrap a message to conventional log message.
-- `libs` contains configurations to use 3rd party libraries in the project. For example, `s3` has its own library but instead of using directly in the project, `libs/s3` will cover common functionalities like `init,deinit,upload,download` to form up the methods which are compatible with the project requriements
 - `utils` contains pure functions which are not depended on any other library to do specific logic for example: string transformation, rounding number, etc
-- `services` the core logics to serve the business live here. Please build the services directory with specific architectures with clear descriptions so that developers can manage all logic, testing and documentations correctly following bussiness requirements changed.
