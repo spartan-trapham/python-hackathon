@@ -1,13 +1,35 @@
-CREATE TABLE users
-(
-    id         uuid                     DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    name       text                                                NOT NULL UNIQUE,
-    email      text                                                NOT NULL UNIQUE,
-    password   text                                                NOT NULL,
-    created_at timestamp WITH TIME ZONE DEFAULT NOW()              NOT NULL,
-    updated_at timestamp WITH TIME ZONE,
-    deleted_at timestamp WITH TIME ZONE,
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE public.users (
+	id uuid DEFAULT uuid_generate_v4() NOT NULL,
+	"name" varchar(128) NULL,
+	email varchar(64) NOT NULL,
+	"password" varchar NOT NULL,
+	created_at timestamptz DEFAULT now() NOT NULL,
+	updated_at timestamptz DEFAULT now() NULL,
+	deleted_at timestamptz NULL,
+	CONSTRAINT pk_users_id PRIMARY KEY (id),
+	CONSTRAINT uq_users_email UNIQUE (email)
 );
 
-INSERT INTO users (name, email, password)
-VALUES ('example', 'example@example.com', '$2a$14$kqQG9Gn77My2yPWIlVasaONTaem2hlhd0nUrhzYzdMGBNb7ahqZ/S');
+CREATE TABLE public.roles (
+	id uuid DEFAULT uuid_generate_v4() NOT NULL,
+	"name" varchar(128) NOT NULL,
+	description varchar NULL,
+    created_at timestamptz DEFAULT now() NOT NULL,
+	updated_at timestamptz DEFAULT now() NULL,
+	deleted_at timestamptz NULL,
+	CONSTRAINT pk_roles_id PRIMARY KEY (id),
+	CONSTRAINT uq_roles_name UNIQUE ("name")
+);
+
+CREATE TABLE public.permissions (
+	id uuid DEFAULT uuid_generate_v4() NOT NULL,
+	"name" varchar NOT NULL,
+	metadata jsonb NULL,
+    created_at timestamptz DEFAULT now() NOT NULL,
+	updated_at timestamptz DEFAULT now() NULL,
+	deleted_at timestamptz NULL,
+	CONSTRAINT pk_permissions_id PRIMARY KEY (id),
+	CONSTRAINT uq_permissions_name UNIQUE ("name")
+);

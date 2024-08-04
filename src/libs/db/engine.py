@@ -1,4 +1,4 @@
-from contextlib import AbstractContextManager
+from contextlib import AbstractContextManager, contextmanager
 from typing import Callable
 
 from sqlalchemy import create_engine, text, Engine, Connection, Metadata
@@ -23,7 +23,8 @@ class DB:
     def get_session(self) -> Session:
         return self._session()
 
-    def connect(self) -> Connection:
+    @contextmanager
+    def connect(self) -> Callable[..., AbstractContextManager[Connection]]:
         connection = self.engine.connect()
         try:
             yield connection

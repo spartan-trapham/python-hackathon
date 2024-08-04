@@ -17,7 +17,8 @@ class UserService:
     def by_id(self, user_id: uuid.UUID) -> User:
         logger.info(f"Get user by ID: {user_id}")
 
-        return self._user_repo.by_id(user_id)
+        with self.db.session as session:
+            return self._user_repo.by_id(session, user_id)
 
     def insert(self, user_request: UserCreateRequest) -> User:
         logger.info(f"Insert a user with name: {user_request.name}")
@@ -26,14 +27,12 @@ class UserService:
         user.name = user_request.name
         user.email = user_request.email
 
-        return self._user_repo.insert(user)
-
-    def insert_full(self, user_request: UserCreateRequest) -> User:
         with self.db.session as session:
-            logger.info(f"Insert a user with name: {user_request.name}")
+            return self._user_repo.insert(session, user)
+        
+    def remove(self, user_id: uuid.UUID) -> None:
+        logger.info(f"Remove user by ID: {user_id}")
 
-            user = User()
-            user.name = user_request.name
-            user.email = user_request.email
-
-            return user_repo.insert(session, user)
+        with self.db.connect as connect:
+            self._user_repo.soft_delete(connect, user_id)
+            # app.remove_user.task(user_id)
