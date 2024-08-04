@@ -4,8 +4,7 @@ app:
   description: 'development'
   host: '127.0.0.1' # uses for web server only
   port: 8080 # uses for web server only
-  root_path: ${ROOT_PATH:``}
-  workers: ${WORKERS:0}
+  workers: ${WORKERS:1}
 
 database:
   name: ${DB_NAME:postgres}
@@ -20,8 +19,8 @@ aws:
   region: ${AWS_REGION:us-east-1}
 
 sqs:
-  url: ${SQS_URL:`http://localhost:4566`}
   generalQueueUrl: ${GENERAL_SQS_QUEUE_URL:`http://localhost:4566/000000000000/general`}
+  celeryQueueUrl: ${CELERY_SQS_QUEUE_URL:`http://localhost:4566/000000000000/celery_task_queue`}
 
 s3:
   url: ${S3_URL:`http://localhost:4566`}
@@ -35,3 +34,19 @@ redis:
   ssl: ${REDIS_SSL:false}
   timeout: ${REDIS_TIMEOUT:1000}
   port: ${REDIS_PORT:6379}
+
+celery:
+  result_expires: 0
+  max_retry: 3
+  schedulers:
+    crontab:
+      daily_service:
+        enabled: true
+        task: worker.tasks.example.hello
+        minute: 0
+        hour: 0
+    interval:
+      interval_service:
+        enabled: true
+        task: worker.tasks.example.hello
+        seconds: 900

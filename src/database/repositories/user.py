@@ -1,8 +1,9 @@
 import uuid
 
 from .base import BaseRepository
-from .errors import NotFoundError
 from ..models import User
+from ...core.app_exceptions import AppException
+from ...errors.error_codes import USER_NOT_FOUND
 
 
 class UserRepository(BaseRepository):
@@ -10,7 +11,7 @@ class UserRepository(BaseRepository):
         with self.session() as session:
             user = session.query(User).filter(User.id == user_id).first()
             if not user:
-                raise UserNotFoundError(entity_id=user)
+                raise AppException(USER_NOT_FOUND)
             return user
 
     def insert(self, user: User):
@@ -19,7 +20,3 @@ class UserRepository(BaseRepository):
             session.commit()
 
         return user
-
-
-class UserNotFoundError(NotFoundError):
-    entity_name: str = "User"

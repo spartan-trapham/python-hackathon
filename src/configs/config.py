@@ -11,7 +11,6 @@ class AppConfig(BaseModel):
     description: str
     host: str
     port: int
-    root_path: str
     workers: int
     log_level: str = Field(default="DEBUG", alias="logLevel")
 
@@ -24,24 +23,24 @@ class DatabaseConfig(BaseModel):
     port: int
 
 
-class AWSConfig:
+class AWSConfig(BaseModel):
     access_key_id: str
     secret_access_key: str
     region: str
 
 
-class SQSConfig:
-    url: str
-    general_queue_url: str
+class SQSConfig(BaseModel):
+    general_queue_url: str = Field(default="")
+    celery_queue_url: str = Field(default="http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/celery_task_queue")
 
 
-class S3Config:
+class S3Config(BaseModel):
     url: str
     public_bucket_name: str
     private_bucket_name: str
 
 
-class RedisConfig:
+class RedisConfig(BaseModel):
     hosts: str
     user: str
     password: str
@@ -50,13 +49,51 @@ class RedisConfig:
     port: int
 
 
+# Celery configuration
+class Task(BaseModel):
+    enabled: bool = Field()
+    task: str = Field()
+
+
+class CrontabConfig(Task):
+    minute: int = Field()
+    hour: int = Field(default=None)
+    day_of_week: int = Field(default=None)
+    day_of_month: int = Field(default=None)
+    month_of_year: int = Field(default=None)
+
+
+class IntervalConfig(Task):
+    seconds: int = Field()
+
+
+class CrontabSchedulerConfigs(BaseModel):
+    daily_service: CrontabConfig = Field()
+
+
+class IntervalSchedulerConfigs(BaseModel):
+    interval_service: IntervalConfig = Field()
+
+
+class SchedulerConfigs(BaseModel):
+    crontab: CrontabSchedulerConfigs = Field(default=None)
+    interval: IntervalSchedulerConfigs = Field(default=None)
+
+
+class CeleryConfig(BaseModel):
+    result_expires: int = Field(default=0)
+    max_retry: int = Field(default=3)
+    schedulers: SchedulerConfigs = Field()
+
+
 class Config(BaseModel):
     app: AppConfig
     database: DatabaseConfig
     # aws: AWSConfig
-    # sqs: SQSConfig
+    sqs: SQSConfig
     # s3: S3Config
     # redis: RedisConfig
+    celery: CeleryConfig
 
 
 class Configuration:
@@ -97,9 +134,10 @@ class Configuration:
             app=AppConfig(**config['app']),
             database=DatabaseConfig(**config['database']),
             # aws=AWSConfig(**config['aws']),
-            # sqs=SQSConfig(**config['sqs']),
+            sqs=SQSConfig(**config['sqs']),
             # s3=S3Config(**config['s3']),
             # redis=RedisConfig(**config['redis'])
+            celery=CeleryConfig(**config['celery']),
         )
         return config_obj
 
