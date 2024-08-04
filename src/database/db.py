@@ -1,7 +1,7 @@
 from contextlib import AbstractContextManager, contextmanager
 from typing import Callable
 
-from sqlalchemy import create_engine, Metadata, Connection
+from sqlalchemy import create_engine, MetaData, Connection
 from sqlalchemy.orm import sessionmaker, Session, scoped_session, DeclarativeBase
 
 from src.configs.config import DatabaseConfig
@@ -9,8 +9,10 @@ from src.core import logging
 
 logger = logging.setup_logger(__name__)
 
+
 class Base(DeclarativeBase):
     pass
+
 
 class Database:
     def __init__(self, config: DatabaseConfig) -> None:
@@ -21,7 +23,7 @@ class Database:
             pool_size=config.max_connections,
         )
 
-        self._metadata = Metadata()
+        self._metadata = MetaData()
         self._metadata.bind = self._engine
         self._session = scoped_session(
             sessionmaker(

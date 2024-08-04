@@ -1,13 +1,14 @@
 from contextlib import AbstractContextManager, contextmanager
 from typing import Callable
 
-from sqlalchemy import create_engine, text, Engine, Connection, Metadata
+from sqlalchemy import create_engine, text, Engine, Connection, MetaData
 from sqlalchemy.orm import sessionmaker, Session, scoped_session
+
 
 class DB:
     def __init__(self, connection_string: str, max_overflow=10, pool_size=5):
         self._engine: Engine = create_engine(connection_string, max_overflow=max_overflow, pool_size=pool_size)
-        self._metadata: Metadata = Metadata()
+        self._metadata: MetaData = MetaData()
         self._metadata.bind = self._engine
         self._session = scoped_session(
             sessionmaker(
@@ -17,9 +18,9 @@ class DB:
             ),
         )
 
-    def get_metadata(self) -> Metadata:
+    def get_metadata(self) -> MetaData:
         return self._metadata
-    
+
     def get_session(self) -> Session:
         return self._session()
 
@@ -44,6 +45,7 @@ class DB:
             raise
         finally:
             session.close()
+
 
 if __name__ == "__main__":
     connection_string = 'postgresql+psycopg2://postgres:postgres@localhost:54321/python'

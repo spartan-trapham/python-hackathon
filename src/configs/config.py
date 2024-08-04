@@ -21,8 +21,8 @@ class DatabaseConfig(BaseModel):
     password: str
     host: str
     port: int
-    max_connections: int
-    overflow_connections: int
+    max_connections: int = Field(default=5)
+    overflow_connections: int = Field(default=5)
 
 
 class AWSConfig(BaseModel):
@@ -33,7 +33,8 @@ class AWSConfig(BaseModel):
 
 class SQSConfig(BaseModel):
     general_queue_url: str = Field(default="")
-    celery_queue_url: str = Field(default="http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/celery_task_queue")
+    celery_queue_url: str = Field(
+        default="http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/celery_task_queue")
 
 
 class S3Config(BaseModel):

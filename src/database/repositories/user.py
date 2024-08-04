@@ -1,12 +1,14 @@
-from datetime import datetime
 import uuid
+from datetime import datetime
 
 from sqlalchemy import update
-from sqlalchemy.orm import Session
 from sqlalchemy.engine import Connection
+from sqlalchemy.orm import Session
+
 from ..models import User
 from ...core.app_exceptions import AppException
 from ...errors.error_codes import USER_NOT_FOUND
+
 
 class UserRepository:
     def by_id(self, session: Session, user_id: uuid.UUID):
