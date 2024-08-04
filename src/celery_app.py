@@ -16,6 +16,8 @@ def setup_logger(**kwargs):
 
 app.autodiscover_tasks(
     [
-        "src.worker.tasks.email",
+        "src.worker.brokers.critical",
+        "src.worker.brokers.internal",
+        "src.worker.brokers.scheduler",
     ]
 )

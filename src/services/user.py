@@ -5,6 +5,7 @@ from src.database.models import User
 from src.database.repositories.user import UserRepository
 from src.libs.db.engine import DB
 from src.schemas.users import UserCreateRequest
+from src.worker.brokers.critical import critical
 
 logger = setup_logger(__name__)
 
@@ -35,4 +36,4 @@ class UserService:
 
         with self.db.connect as connect:
             self._user_repo.soft_delete(connect, user_id)
-            # app.remove_user.task(user_id)
+            critical.apply_async(user_id)

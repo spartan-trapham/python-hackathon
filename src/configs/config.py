@@ -33,6 +33,8 @@ class AWSConfig(BaseModel):
 
 class SQSConfig(BaseModel):
     general_queue_url: str = Field(default="")
+    expires_after: int = Field(default=0)
+    max_retry: int = Field(default=3)
     celery_queue_url: str = Field(
         default="http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/celery_task_queue")
 
