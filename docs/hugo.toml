@@ -2,6 +2,8 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'My Docs Site'
 
+[params.docs]
+  intLinkTooltip   = true # Enable a tooltip for internal links that displays info about the destination? default false
 
 [module]
     [[module.imports]]
