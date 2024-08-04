@@ -21,6 +21,8 @@ class DatabaseConfig(BaseModel):
     password: str
     host: str
     port: int
+    max_connections: int
+    overflow_connections: int
 
 
 class AWSConfig(BaseModel):
