@@ -5,6 +5,8 @@ from ..database.db import Database
 from ..database.models import User
 from ..database.repositories.user import UserRepository
 from ..schemas.users import UserCreateRequest
+
+
 # from ..worker.brokers.critical import usertask_remove_user
 
 
@@ -33,6 +35,6 @@ class UserService(BaseService):
     def remove(self, user_id: uuid.UUID) -> None:
         self.logger.info(f"Remove user by ID: {user_id}")
 
-        with self.db.connect as connect:
+        with self.db.connect() as connect:
             self.user_repo.soft_delete(connect, user_id)
             # usertask_remove_user.apply_async(user_id)

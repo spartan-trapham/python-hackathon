@@ -7,8 +7,8 @@ from src.worker.tasks.notification import NotificationTask
 from src.worker.tasks.s3 import S3Task
 from src.worker.tasks.user import UserTask
 
-scheduler_worker = Celery(main="scheduler", broker=celery_config.scheduler.broker_url,
-                          backend=celery_config.scheduler.backend_url)
+# scheduler_worker = Celery(main="scheduler", broker=celery_config.scheduler.broker_url,
+#                           backend=celery_config.scheduler.backend_url)
 
 
 # @scheduler_worker.task(base=NotificationTask, bind=True)
