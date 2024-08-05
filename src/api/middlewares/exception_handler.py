@@ -4,7 +4,7 @@ from starlette.types import ASGIApp, Scope, Receive, Send
 
 from src.libs.log import logging
 from src.common.errors.app_exceptions import AppFieldException, AppException
-from src.common.errors.error_codes import UNKNOWN_ERROR, BAD_REQUEST_ERROR, UNAUTHENTICATED_ERROR, FORBIDDEN_ERROR, \
+from src.common.errors.error_codes import UNKNOWN_ERROR, BAD_REQUEST_ERROR, UNAUTHORIZED_ERROR, FORBIDDEN_ERROR, \
     NOT_FOUND_ERROR
 from src.utils.response import response_error
 
@@ -36,7 +36,7 @@ class ExceptionHandlerMiddleware:
                 if exception.status_code == 400:
                     new_exception = AppException(BAD_REQUEST_ERROR)
                 elif exception.status_code == 401:
-                    new_exception = AppException(UNAUTHENTICATED_ERROR)
+                    new_exception = AppException(UNAUTHORIZED_ERROR)
                 elif exception.status_code == 403:
                     new_exception = AppException(FORBIDDEN_ERROR)
                 elif exception.status_code == 404:

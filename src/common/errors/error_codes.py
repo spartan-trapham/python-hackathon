@@ -9,7 +9,7 @@ BAD_REQUEST_ERROR = {
     'message': 'A bad request was made.'
 }
 
-UNAUTHENTICATED_ERROR = {
+UNAUTHORIZED_ERROR = {
     'code': 'SYS-0401',
     'http_status': HTTP_401_UNAUTHORIZED,
     'message': 'User authentication is not done. You need to log in again.'

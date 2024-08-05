@@ -32,6 +32,7 @@ class Database:
                 bind=self._engine,
             ),
         )
+        logger.info("Finish initialization database")
 
     @contextmanager
     def session(self) -> Callable[..., AbstractContextManager[Session]]:

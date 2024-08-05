@@ -13,6 +13,9 @@ class AppConfig(BaseModel):
     port: int
     workers: int
     log_level: str = Field(default="DEBUG", alias="logLevel")
+    jwt_secret: str = Field(default="secret")
+    access_token_expire_seconds: int = Field(default=3600)
+    refresh_token_expire_seconds: int = Field(default=604800)
 
 
 class DatabaseConfig(BaseModel):

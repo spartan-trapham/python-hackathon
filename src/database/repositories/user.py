@@ -6,7 +6,6 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
 from src.database.models.user_roles import UserRole
-
 from ..models import User
 from ...common.errors.app_exceptions import AppException
 from ...common.errors.error_codes import USER_NOT_FOUND
@@ -19,7 +18,13 @@ class UserRepository:
             raise AppException(USER_NOT_FOUND)
         return user
 
-    def insert(self, session: Session, user: User):
+    def by_email(self, session: Session, email: str) -> User:
+        user = session.query(User).filter(User.email == email).first()
+        if not user:
+            raise AppException(USER_NOT_FOUND)
+        return user
+
+    def insert(self, session: Session, user: User) -> User:
         session.add(user)
         return user
 

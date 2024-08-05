@@ -23,9 +23,13 @@ celery = "5.4.0"
 flower = "2.0.0"
 pycurl = "7.45.3"
 redis = "^5.0.8"
+passlib = "1.7.4"
+pyjwt = "2.9.0"
+bcrypt= "4.2.0"
+
 
 [tool.poetry.dev-dependencies]
-pylint = "2.5.3"
+pylint = "3.2.6"
 coloredlogs = "14.0.0"
 colorlog = "4.2.1"
 pytest = "^7.4.3"

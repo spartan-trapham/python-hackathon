@@ -1,13 +1,10 @@
 from dependency_injector import containers, providers
 
-from src.configs.config import Configuration
-from src.database.db import Database
-from src.database.repositories.user import UserRepository
-from src.services.user import UserService
-
-from src.worker.brokers.internal import internal
-from src.worker.brokers.critical import critical
-from src.worker.brokers.scheduler import scheduler
+from ..configs.config import Configuration
+from ..database.db import Database
+from ..database.repositories.user import UserRepository
+from ..services.auth import AuthService
+from ..services.user import UserService
 
 
 class Container(containers.DeclarativeContainer):
@@ -15,7 +12,7 @@ class Container(containers.DeclarativeContainer):
         packages=[
             "..api",
             "..api.controllers",
-            "..configs",
+            "..worker",
         ]
     )
     # Configurations
@@ -23,12 +20,10 @@ class Container(containers.DeclarativeContainer):
 
     # Application
     db = providers.Singleton(Database, config=configuration.provided.database)
-    internal = internal
-    critical = critical
-    scheduler = scheduler
 
     # Repositories
-    user_repo = providers.Factory(UserRepository, session=db.provided.session)
+    user_repo = providers.Factory(UserRepository)
 
     # Services
     user_service = providers.Factory(UserService, db=db, user_repo=user_repo)
+    auth_service = providers.Factory(AuthService, db=db, user_repo=user_repo, app_config=configuration.provided.app)

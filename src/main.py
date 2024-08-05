@@ -2,7 +2,7 @@ import uvicorn
 
 from src.containers.container import Container
 
-app_config = Container().configuration().app
+app_config = Container.configuration().app
 
 
 if __name__ == "__main__":
