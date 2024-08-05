@@ -11,14 +11,14 @@ logger = setup_logger(__name__)
 
 
 class UserService:
-    def __init__(self, db: DB, user_repo: UserRepository):
+    def __init__(self, db: Database, user_repo: UserRepository):
         self._user_repo = user_repo
         self.db = db
 
     def by_id(self, user_id: uuid.UUID) -> User:
         logger.info(f"Get user by ID: {user_id}")
 
-        with self.db.session as session:
+        with self.db.session() as session:
             return self._user_repo.by_id(session, user_id)
 
     def insert(self, user_request: UserCreateRequest) -> User:
@@ -28,12 +28,12 @@ class UserService:
         user.name = user_request.name
         user.email = user_request.email
 
-        with self.db.session as session:
+        with self.db.session() as session:
             return self._user_repo.insert(session, user)
         
     def remove(self, user_id: uuid.UUID) -> None:
         logger.info(f"Remove user by ID: {user_id}")
 
-        with self.db.connect as connect:
+        with self.db.connect() as connect:
             self._user_repo.soft_delete(connect, user_id)
             usertask_remove_user.apply_async(user_id)

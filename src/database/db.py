@@ -35,11 +35,12 @@ class Database:
 
     @contextmanager
     def session(self) -> Callable[..., AbstractContextManager[Session]]:
-        session: Session = self._session()
+        """Provide a transactional scope around a series of operations."""
+        session = self._session()
         try:
             yield session
-        except Exception:
-            logger.exception("Session rollback because of exception")
+            session.commit()
+        except:
             session.rollback()
             raise
         finally:
@@ -47,12 +48,12 @@ class Database:
 
     @contextmanager
     def connect(self) -> Callable[..., AbstractContextManager[Connection]]:
-        with self._engine.connect() as connection:
-            try:
-                yield connection
-            except Exception:
-                logger.exception("Connection rollback because of exception")
-                connection.rollback()
-                raise
-            finally:
-                connection.close()
+        connection = self._engine.connect()
+        try:
+            yield connection
+        except Exception:
+            logger.exception("Connection rollback because of exception")
+            connection.rollback()
+            raise
+        finally:
+            connection.close()
