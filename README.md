@@ -20,7 +20,7 @@ The project contains some main features to build up a generic api-server:
 - [databases](#database)
 - [workers](#workers)
 
-and [some other utilities](#common-utilities-and-helpers).
+and [some other utilities](#common-utilities-and-helpers). All of them are managed by [Dependency-Injector](https://python-dependency-injector.ets-labs.org/)
 
 ```
 src
