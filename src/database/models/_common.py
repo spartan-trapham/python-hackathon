@@ -1,11 +1,11 @@
+from sqlalchemy.dialects.postgresql import UUID
 import uuid
-
-from sqlalchemy import Column, VARCHAR, func, TIMESTAMP
+from sqlalchemy import Column, func, TIMESTAMP
 from sqlalchemy.orm import declared_attr
 
 
 class IDMixin:
-    id = Column(VARCHAR(length=64), primary_key=True, autoincrement=False, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, autoincrement=False, default=uuid.uuid4)
 
 
 # pylint: disable=no-self-argument

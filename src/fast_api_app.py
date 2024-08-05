@@ -8,9 +8,9 @@ from starlette.requests import Request
 from src.api import routers
 from src.api.middlewares.authentication import AuthenticationMiddleware
 from src.api.middlewares.exception_handler import ExceptionHandlerMiddleware
-# from src.celery_app import app as celery_app
 from src.containers.container import Container
 from src.utils.request import generate_request_id
+from src.worker.brokers import internal, scheduler, critical
 
 
 def init_exception_handlers(app_: FastAPI) -> None:
@@ -49,7 +49,9 @@ def create_app() -> FastAPI:
     )
 
     app_.container = container
-    # app_.celery_app = celery_app
+    app_.internal = internal.internal
+    app_.scheduler = scheduler.scheduler
+    app_.critical = critical.critical
 
     init_exception_handlers(app_)
     init_middlewares(app_)

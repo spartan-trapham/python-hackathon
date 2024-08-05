@@ -1,12 +1,19 @@
+from src.containers.container import Container
+from src.libs.log import logging
 import uuid
 
-from celery import Celery
-from ..tasks.user import UserTask
-from ...containers.container import Container
+# from src.containers.container import Container
+from src.configs.config import Configuration
+from src.database.repositories.user import UserRepository
+from src.worker.tasks.user import UserTask
 
-# critical_worker = Celery(main="critical", broker=celery_config.critical.broker_url, backend=celery_config.critical.backend_url)
+# get configuration here
+logger = logging.setup_logger(__name__)
 
+config = Configuration().get_config().celery
+user_task = UserTask(UserRepository(), logger)
+critical = Container.critical()
 
-# @critical_worker.task(base=UserTask, bind=True)
-def usertask_remove_user(self, user_ids: list[uuid.UUID]):
-    return self.remove_user(user_ids)
+@critical.task()
+def usertask_remove_user(user_ids: list[uuid.UUID]):
+    return user_task.remove_user(user_ids)

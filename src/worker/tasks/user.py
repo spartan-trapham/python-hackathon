@@ -6,13 +6,10 @@ from celery import Celery
 
 from src.database.repositories.user import UserRepository
 
-
-class UserTask(Celery):
-    def __init__(self, celery: Celery, user_repo: UserRepository, logger: Logger):
-        super().__init__()
-        self.user_repo = user_repo
-        self.logger = logger
-        self.client = celery
+class UserTask:
+    def __init__(self, user_repo: UserRepository, logger: Logger):
+      self.user_repo = user_repo
+      self.logger = logger
 
     def send_email(self, user_ids: list[uuid.UUID]):
         self.logger.info(f"Start to send email to user ids {user_ids}".format_map(user_ids=user_ids))
