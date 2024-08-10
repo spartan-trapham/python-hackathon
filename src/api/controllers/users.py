@@ -25,4 +25,4 @@ async def get(id: uuid.UUID, user_service: UserService = Depends(Provide[Contain
     if id == uuid.UUID('c2667213-c3b2-4a8a-b47a-ea8bd3173e49'):
         raise AppException(USER_NOT_FOUND)
 
-    return user_service.by_id(user_id=id)
+    return await user_service.by_id(user_id=id)

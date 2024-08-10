@@ -5,7 +5,10 @@ from celery import signals
 from src.containers.container import Container
 from src.libs.log import logging
 
-app = Container.celery().client
+container = Container()
+critical = container.critical()
+internal = container.internal()
+scheduler = container.scheduler()
 
 
 # pylint: disable=unused-argument
@@ -14,10 +17,20 @@ def setup_logger(**kwargs):
     logging.setup_logger(__name__)
 
 
-app.autodiscover_tasks(
+critical.autodiscover_tasks(
     [
         "src.worker.brokers.critical",
+    ]
+)
+
+internal.autodiscover_tasks(
+    [
         "src.worker.brokers.internal",
+    ]
+)
+
+scheduler.autodiscover_tasks(
+    [
         "src.worker.brokers.scheduler",
     ]
 )

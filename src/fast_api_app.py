@@ -49,9 +49,9 @@ def create_app() -> FastAPI:
     )
 
     app_.container = container
-    app_.internal = internal.internal
-    app_.scheduler = scheduler.scheduler
-    app_.critical = critical.critical
+    # app_.internal = internal.internal
+    # app_.scheduler = scheduler.scheduler
+    # app_.critical = critical.critical
 
     init_exception_handlers(app_)
     init_middlewares(app_)

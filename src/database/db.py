@@ -28,6 +28,7 @@ class Database:
         self._session = scoped_session(
             sessionmaker(
                 autocommit=False,
+                expire_on_commit=False,
                 autoflush=False,
                 bind=self._engine,
             ),
