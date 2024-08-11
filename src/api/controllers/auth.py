@@ -4,7 +4,7 @@ from dependency_injector.wiring import (
 )
 from fastapi import APIRouter, Depends
 
-from ...containers.container import Container
+from ...containers.service_container import ServiceContainer
 from ...libs.log import logging
 from ...schemas.auth import TokenResponse, RefreshTokenRequest, LoginRequest
 from ...services.auth import AuthService
@@ -17,7 +17,7 @@ logger = logging.setup_logger(__name__)
 @inject
 async def login(
         login_request: LoginRequest,
-        auth_service: AuthService = Depends(Provide[Container.auth_service])
+        auth_service: AuthService = Depends(Provide[ServiceContainer.auth_service])
 ):
     logger.info("Login")
     return auth_service.login(login_request)
@@ -27,12 +27,12 @@ async def login(
 @inject
 async def refresh_token(
         refresh_token_request: RefreshTokenRequest,
-        auth_service: AuthService = Depends(Provide[Container.auth_service])
+        auth_service: AuthService = Depends(Provide[ServiceContainer.auth_service])
 ):
     return auth_service.refresh_token(refresh_token_request)
 
 
 @router.get('/logout', response_model=None)
 @inject
-async def login(auth_service: AuthService = Depends(Provide[Container.auth_service])):
+async def login(auth_service: AuthService = Depends(Provide[ServiceContainer.auth_service])):
     return auth_service.logout()

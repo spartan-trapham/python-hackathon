@@ -8,9 +8,8 @@ from starlette.requests import Request
 from src.api import routers
 from src.api.middlewares.authentication import AuthenticationMiddleware
 from src.api.middlewares.exception_handler import ExceptionHandlerMiddleware
-from src.containers.container import Container
+from src.containers.api_container import APIContainer
 from src.utils.request import generate_request_id
-from src.worker.brokers import internal, scheduler, critical
 
 
 def init_exception_handlers(app_: FastAPI) -> None:
@@ -38,7 +37,7 @@ def init_middlewares(app_: FastAPI) -> None:
 
 
 def create_app() -> FastAPI:
-    container = Container()
+    container = APIContainer()
 
     app_config = container.configuration().app
 
@@ -49,9 +48,6 @@ def create_app() -> FastAPI:
     )
 
     app_.container = container
-    # app_.internal = internal.internal
-    # app_.scheduler = scheduler.scheduler
-    # app_.critical = critical.critical
 
     init_exception_handlers(app_)
     init_middlewares(app_)

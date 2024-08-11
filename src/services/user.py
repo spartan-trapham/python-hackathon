@@ -10,18 +10,17 @@ from ..database.repositories.user import UserRepository
 from ..schemas.users import UserCreateRequest
 
 class UserService(BaseService):
-    def __init__(self, db: Database, user_repo: UserRepository, background: Celery):
+    def __init__(self, db: Database, user_repo: UserRepository, scheduler: Celery):
         super().__init__()
         self.user_repo = user_repo
         self.db = db
-        self.background = background
+        self.scheduler = scheduler
 
     async def by_id(self, user_id: uuid.UUID) -> User:
         self.logger.info(f"Get user by ID: {user_id}")
         user: User
         with self.db.session() as session:
             self.logger.info(f"Send email to user ID: {user_id}")
-            self.background.send_task("scheduler.usertask_send_email", [user_id])
             user = await self.user_repo.by_id(session, user_id)
         return user
 
@@ -40,7 +39,7 @@ class UserService(BaseService):
 
         with self.db.connect() as connect:
             self.user_repo.soft_delete(connect, user_id)
-            self.background.send_task("critical.usertask_remove_user", [user_id])
+            self.scheduler.send_task("scheduler.remove_user", [user_id])
 
     def remove_user(self, user_ids: list[uuid.UUID]):
         self.logger.info(f"Start to remove user ids {user_ids}".format_map(user_ids=user_ids))

@@ -1,8 +1,8 @@
 import uvicorn
 
-from src.containers.container import Container
+from src.containers.api_container import APIContainer
 
-app_config = Container.configuration().app
+app_config = APIContainer.configuration().app
 
 
 if __name__ == "__main__":

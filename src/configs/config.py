@@ -97,7 +97,6 @@ class CeleryConfig(BaseModel):
     # schedulers: SchedulerConfigs = Field()
     critical: QueueConfig = Field()
     scheduler: QueueConfig = Field()
-    internal: QueueConfig = Field()
 
 class Config(BaseModel):
     app: AppConfig
