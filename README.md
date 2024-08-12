@@ -20,7 +20,11 @@ The project contains some main features to build up a generic api-server:
 - [databases](#database)
 - [workers](#workers)
 
-and [some other utilities](#common-utilities-and-helpers). All of them are managed by [Dependency-Injector](https://python-dependency-injector.ets-labs.org/)
+and [some other utilities](#common-utilities-and-helpers). All of them are managed by [Dependency-Injector](https://python-dependency-injector.ets-labs.org/) as containers
+
+![Project Structure](docs/assets/images/project-structure.png)
+
+The project contains 2 separate application instances: API server powered by FastAPI and worker servers powered by Celery
 
 ```
 src
