@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.api.controllers import users, tasks, auth
-from src.api.controllers.public import health
+from src.api.controllers import users, tasks
+from src.api.controllers.public import auth, health
 
 router = APIRouter(prefix='/api')
 router.include_router(health.router)

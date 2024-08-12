@@ -4,10 +4,10 @@ from dependency_injector.wiring import (
 )
 from fastapi import APIRouter, Depends
 
-from ...containers.service_container import ServiceContainer
-from ...libs.log import logging
-from ...schemas.auth import TokenResponse, RefreshTokenRequest, LoginRequest
-from ...services.auth import AuthService
+from ....containers.service_container import ServiceContainer
+from ....libs.log import logging
+from ....schemas.auth import TokenResponse, RefreshTokenRequest, LoginRequest
+from ....services.auth import AuthService
 
 router = APIRouter(prefix="/auth")
 logger = logging.setup_logger(__name__)
