@@ -24,8 +24,8 @@ hero:
     alt: "Lotus Docs Logo"
     height: 80px
 
-  title: "Python template"
-  subtitle: A lightweight, **modern documentation** theme for Hugo. Easily customised for building **fast**, **secure**, and **SEO-friendly** documentation sites.
+  title: "STTD Python template"
+  subtitle: Complete template for API server using latest techniques from framework FastAPI, SQLAlchemy, Celery
 
   image:
     path: "images" # path to image under configured assets directory. default 'images'
@@ -37,13 +37,13 @@ hero:
   ctaButton:
     icon: rocket_launch
     btnText: "Get Started"
-    url: "https://spartan-trapham.github.io/spartan-trapham/python-hackathon/docs"
+    url: "https://spartan-trapham.github.io/python-hackathon/docs"
   cta2Button:
     icon: construction
     btnText: "In Development"
     url: "https://github.com/c0x12c/python-hackathon-STTD/"
 
-  info: "**Open Source** MIT Licensed."
+  # info: "**Open Source** MIT Licensed."
 
 # Feature Grid
 featureGrid:
@@ -51,8 +51,8 @@ featureGrid:
   weight: 20
   template: feature grid
 
-  title: Why choose Lotus Docs?
-  subtitle: Lotus Docs is a highly configurable Hugo documentation theme. Yet, with the default configuration you can deploy and publish your documentation site in a matter of minutes. Check out some core features below.
+  title: Why choose STTD template?
+  subtitle: STTD template support common frameworks and libraries for building API server. It's easy to use and scale up into microservices architecture.
 
   items:
     - title: Fast
