@@ -10,9 +10,6 @@ description = "Brief introduction about python project structure"
 publishdate = "2023-05-03T22:37:22+01:00"
 tags = ["Beginners"]
 +++
-## Project structure
-
-# Template API
 
 ## Requirements
 
@@ -22,7 +19,7 @@ tags = ["Beginners"]
 
 ## Getting started
 
-Please check the [document](docs/content/docs/getting-started.md) to run the project with poetry and celery.
+Please check the [document](docs/getting-started) to run the project with poetry and celery.
 
 ## Project structure
 

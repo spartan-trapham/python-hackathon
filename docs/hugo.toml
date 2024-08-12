@@ -1,9 +1,18 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://spartan-trapham.github.io'
 languageCode = 'en-us'
-title = 'My Docs Site'
+title = 'Python template user guide'
 
 [params.docs]
   intLinkTooltip   = true # Enable a tooltip for internal links that displays info about the destination? default false
+
+[markup.goldmark.renderer]
+    unsafe = true
+
+[[menu.primary]]
+    name  = "Docs"
+    url = "/docs/"
+    identifier = "docs"
+    weight = 10
 
 [module]
     [[module.imports]]

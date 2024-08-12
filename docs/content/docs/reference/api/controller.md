@@ -27,6 +27,7 @@ Although some endpoints may have similar functionalities and can be grouped toge
 
 With those properties, it will reduce the cost greatly for long-term maintenance and development if those endpoints are separated. Almost user and system requirements are separated between users/clients. Developers and QA can break down, develop, testing and deploy tasks easily without interference between users.
 
+This is an example of a handler under an group of endpoints
 ```python
 import uuid
 
@@ -52,3 +53,4 @@ async def get(request: Request, user_id: uuid.UUID, scheduler: Celery = Depends(
     task = scheduler.send_task('scheduler.usertask_send_email', args=[[user_id]])
     return task.id
 ```
+The handler, `get`, receive `user_id: uuid.UUID` from request and inject automatically scheduler from Container to provide background task features.

@@ -69,15 +69,15 @@ DI pattern helps this part to be well-tested and easily for refactoring other pa
 ### Database
 `models` contains description of database tables and common queries/mutations for that table. Don't try to import any other entities unless they are relations. We will do complex query in repositories for particular services. [Read more](docs/content/docs/reference/database/models.md)
 
+`repositories` contains logic to support services interact with database. It is designed to support managing both connections and transactions in multiple queries/mutations in the repositories. [Read more](docs/content/docs/reference/database/repositories.md)
+
 `migrations` is a collection of `SQL` scripts to form up the database structures and some initial data. This directory is followed [user guide of flyway](https://www.red-gate.com/hub/university/courses/flyway/getting-started-with-flyway/introduction-to-flyway/folder-structure-and-configuration-file). [Read more](docs/content/docs/reference/database/migrations.md)
 
 ### Workers
-`workers` implement [Celery frameworks](https://docs.celeryq.dev/en/stable/index.html) to manage and distributed task queue. The structure would somehow similar with [API gateway](#api-gateway). `workers` contains 2 main parts: **brokers** and **tasks**
+`workers` implement [Celery frameworks](https://docs.celeryq.dev/en/stable/index.html) to manage and distributed task queue. The structure would somehow similar with [API gateway](#api-gateway). `workers` contains 2 main parts: **brokers** and **tasks**. In reality, tasks is another name of long-running services. Thus brokers and tasks live in the same file. The main logic is still in the services modules.
 
 #### [Brokers](docs/content/docs/reference/workers/brokers.md)
 `brokers` act as a dispatcher to get the message from the queue then deliver the message to the workers to run the tasks. Their roles are similar with API which routes requests to the controllers or handlers.
-#### [Tasks](docs/content/docs/reference/workers/tasks.md)
-`Tasks` is list of methods that workers can execute matched with message from the queue. In API, this part is similar with service that controllers will called to serve the requests.
 
 ### Libraries
 `libs` contains configurations to use 3rd party libraries in the project. For example, `s3` has its own library but instead of using directly in the project, `libs/s3` will cover common functionalities like `init,deinit,upload,download` to form up the methods which are compatible with the project requriements
