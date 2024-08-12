@@ -37,11 +37,11 @@ hero:
   ctaButton:
     icon: rocket_launch
     btnText: "Get Started"
-    url: "/docs/"
+    url: "https://spartan-trapham.github.io/spartan-trapham/python-hackathon/docs"
   cta2Button:
     icon: construction
     btnText: "In Development"
-    url: "https://github.com/spartan-trapham/python-hackathon"
+    url: "https://github.com/c0x12c/python-hackathon-STTD/"
 
   info: "**Open Source** MIT Licensed."
 

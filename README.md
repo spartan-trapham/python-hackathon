@@ -10,6 +10,8 @@
 
 Please check the [document](docs/content/docs/getting-started.md) to run the project with poetry and celery.
 
+For the full user guide, you can visit our website at [STTD](https://spartan-trapham.github.io/python-hackathon/)
+
 ## Project structure
 
 The project contains some main features to build up a generic api-server:
